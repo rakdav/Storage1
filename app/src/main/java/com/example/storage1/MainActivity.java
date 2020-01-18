@@ -37,7 +37,11 @@ public class MainActivity extends AppCompatActivity {
         buttonRead.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                try {
+                    readText();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
             }
         });
     }
@@ -46,14 +50,14 @@ public class MainActivity extends AppCompatActivity {
         String t=textWrite.getText().toString();
         try
         {
-            fos=new FileOutputStream(FILE_NAME);
+            fos=openFileOutput(FILE_NAME,MODE_PRIVATE);
             fos.write(t.getBytes());
             Toast.makeText(getApplicationContext(),
                     "Файл успешно сохранен",Toast.LENGTH_SHORT).show();
         } catch (FileNotFoundException e) {
-            e.printStackTrace();
+            Toast.makeText(getApplicationContext(),e.getMessage(),Toast.LENGTH_SHORT).show();
         } catch (IOException e) {
-            e.printStackTrace();
+            Toast.makeText(getApplicationContext(),e.getMessage(),Toast.LENGTH_SHORT).show();
         }
         finally {
             if(fos!=null) {
@@ -66,14 +70,14 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
-    private void readText()
-    {
+    private void readText() throws IOException {
         FileInputStream fin=null;
-        try {
-            fin=openFileInput(FILE_NAME);
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
-        }
+        fin=openFileInput(FILE_NAME);
+        byte[] bytes=new byte[fin.available()];
+        fin.read(bytes);
+        String t=new String(bytes);
+        textReader.setText(t);
+        if(fin!=null) fin.close();
     }
 
 
