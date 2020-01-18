@@ -7,12 +7,18 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
+
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
 
 public class MainActivity extends AppCompatActivity {
     private EditText textWrite;
     private Button buttonWrite;
     private TextView textReader;
     private Button buttonRead;
+    private final static String FILE_NAME="content.txt";
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -33,6 +39,30 @@ public class MainActivity extends AppCompatActivity {
 
             }
         });
+    }
+    private void saveText() {
+        FileOutputStream fos=null;
+        String t=textWrite.getText().toString();
+        try
+        {
+            fos=new FileOutputStream(FILE_NAME);
+            fos.write(t.getBytes());
+            Toast.makeText(getApplicationContext(),
+                    "Файл успешно сохранен",Toast.LENGTH_SHORT).show();
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        finally {
+            if(fos!=null) {
+                try {
+                    fos.close();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
     }
 
 
