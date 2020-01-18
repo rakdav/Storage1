@@ -9,6 +9,7 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
@@ -30,7 +31,7 @@ public class MainActivity extends AppCompatActivity {
         buttonWrite.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                saveText();
             }
         });
         buttonRead.setOnClickListener(new View.OnClickListener() {
@@ -62,6 +63,16 @@ public class MainActivity extends AppCompatActivity {
                     e.printStackTrace();
                 }
             }
+        }
+    }
+
+    private void readText()
+    {
+        FileInputStream fin=null;
+        try {
+            fin=openFileInput(FILE_NAME);
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
         }
     }
 
