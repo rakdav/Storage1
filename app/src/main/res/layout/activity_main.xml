@@ -36,6 +36,7 @@
         android:layout_margin="16dp"
         android:layout_weight="1"
         android:layout_gravity="center"
-        android:text="Read"/>
+        android:text="Read"
+        android:id="@+id/buttonRead"/>
 
 </LinearLayout>
